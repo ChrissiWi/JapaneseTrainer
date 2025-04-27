@@ -8,10 +8,10 @@ namespace JapaneseTrainer;
 
 public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
-	private Vocabulary _currentVocabulary;
+	private Vocabulary? _currentVocabulary;
 	private List<Vocabulary> _vocabularies;
 
-	public Vocabulary CurrentVocabulary
+	public Vocabulary? CurrentVocabulary
 	{
 		get => _currentVocabulary;
 		set
@@ -90,8 +90,8 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		}
 	}
 
-	public event PropertyChangedEventHandler? PropertyChanged;
-	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+	public new event PropertyChangedEventHandler? PropertyChanged;
+	protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
