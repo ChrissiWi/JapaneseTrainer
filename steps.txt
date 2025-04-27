@@ -1,3 +1,6 @@
 new Maui Project "JapaneseTrainer"
 cd JapaneseTrainer
 dotnet build -t:Run -f net8.0-maccatalyst
+
+cd ..
+dotnet add JapaneseTrainer/JapaneseTrainer.csproj package Microsoft.EntityFrameworkCore.Sqlite
