@@ -83,41 +83,22 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		return context.Vocabularies.ToList();
 	}
 
-	private void OnButtonAClicked(object sender, EventArgs e)
+	private void OnAnswerButtonClicked(object sender, EventArgs e)
 	{
 		Button? button = sender as Button;
 		if (button != null)
 		{
-			button.BackgroundColor = Colors.Red;
+			if (button.Text == CurrentVocabulary?.Translation)
+			{
+				button.BackgroundColor = Colors.Green;
+			}
+			else
+			{
+				button.BackgroundColor = Colors.Red;
+			}
 		}
 	}
 
-	private void OnButtonBClicked(object sender, EventArgs e)
-	{
-		Button? button = sender as Button;
-		if (button != null)
-		{
-			button.BackgroundColor = Colors.Red;
-		}
-	}
-
-	private void OnButtonCClicked(object sender, EventArgs e)
-	{
-		Button? button = sender as Button;
-		if (button != null)
-		{
-			button.BackgroundColor = Colors.Red;
-		}
-	}
-
-	private void OnButtonDClicked(object sender, EventArgs e)
-	{
-		Button? button = sender as Button;
-		if (button != null)
-		{
-			button.BackgroundColor = Colors.Red;
-		}
-	}
 
 	private void OnButtonNextClicked(object sender, EventArgs e)
 	{

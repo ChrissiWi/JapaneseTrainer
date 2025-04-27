@@ -15,19 +15,19 @@
             <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="10" RowSpacing="10">
                 <Button Text="{Binding AnswerA}"
                         Grid.Row="0" Grid.Column="0"
-                        Clicked="OnButtonAClicked"/>
+                        Clicked="OnAnswerButtonClicked"/>
 
                 <Button Text="{Binding AnswerB}"
                         Grid.Row="0" Grid.Column="1"
-                        Clicked="OnButtonBClicked"/>
+                        Clicked="OnAnswerButtonClicked"/>
 
                 <Button Text="{Binding AnswerC}"
                         Grid.Row="1" Grid.Column="0"
-                        Clicked="OnButtonCClicked"/>
+                        Clicked="OnAnswerButtonClicked"/>
 
                 <Button Text="{Binding AnswerD}"
                         Grid.Row="1" Grid.Column="1"
-                        Clicked="OnButtonDClicked"/>
+                        Clicked="OnAnswerButtonClicked"/>
             </Grid>
         </VerticalStackLayout>
 
