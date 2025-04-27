@@ -13,19 +13,19 @@
                    HorizontalOptions="Center" />
 
             <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="10" RowSpacing="10">
-                <Button Text="{Binding CurrentVocabulary.Translation}"
+                <Button Text="{Binding AnswerA}"
                         Grid.Row="0" Grid.Column="0"
                         Clicked="OnButtonAClicked"/>
 
-                <Button Text="b"
+                <Button Text="{Binding AnswerB}"
                         Grid.Row="0" Grid.Column="1"
                         Clicked="OnButtonBClicked"/>
 
-                <Button Text="c"
+                <Button Text="{Binding AnswerC}"
                         Grid.Row="1" Grid.Column="0"
                         Clicked="OnButtonCClicked"/>
 
-                <Button Text="d"
+                <Button Text="{Binding AnswerD}"
                         Grid.Row="1" Grid.Column="1"
                         Clicked="OnButtonDClicked"/>
             </Grid>
