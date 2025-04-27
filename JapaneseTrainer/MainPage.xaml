@@ -8,12 +8,12 @@
         <Grid RowDefinitions="Auto,*,Auto,Auto" Padding="20">
 
         <VerticalStackLayout Grid.Row="1" Spacing="20">
-            <Label Text="test"
+            <Label Text="{Binding _currentVocabulary.JapaneseWord}"
                    FontSize="32"
                    HorizontalOptions="Center" />
 
             <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="10" RowSpacing="10">
-                <Button Text="a"
+                <Button Text="{Binding _currentVocabulary.Translation}"
                         Grid.Row="0" Grid.Column="0"
                         Clicked="OnButtonAClicked"/>
 
