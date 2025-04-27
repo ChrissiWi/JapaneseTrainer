@@ -32,9 +32,11 @@ public static class MauiProgram
 		using var scope = Services.CreateScope();
 		var context = scope.ServiceProvider.GetRequiredService<JapaneseTrainerContext>();
 		context.Database.EnsureCreated();
+		
+		// Seed the database with initial data
+		DatabaseInitializer.Initialize(context);
 
 		return app;
-
 	}
 
 	private static void ConfigureServices(IServiceCollection services)
@@ -43,6 +45,5 @@ public static class MauiProgram
 		DatabasePath = Path.Combine(FileSystem.AppDataDirectory, "japanesetrainer.db");
 		services.AddDbContext<JapaneseTrainerContext>(options =>
 			options.UseSqlite($"Data Source={DatabasePath}"));
-
 	}
 }
