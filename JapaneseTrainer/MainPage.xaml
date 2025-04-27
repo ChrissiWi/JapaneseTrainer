@@ -13,21 +13,25 @@
                    HorizontalOptions="Center" />
 
             <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="10" RowSpacing="10">
-                <Button Text="{Binding AnswerA}"
+                <Button x:Name="AnswerButtonA" Text="{Binding AnswerA}"
                         Grid.Row="0" Grid.Column="0"
-                        Clicked="OnAnswerButtonClicked"/>
+                        Clicked="OnAnswerButtonClicked"
+                        BackgroundColor="LightSkyBlue"/>
 
-                <Button Text="{Binding AnswerB}"
+                <Button x:Name="AnswerButtonB" Text="{Binding AnswerB}"
                         Grid.Row="0" Grid.Column="1"
-                        Clicked="OnAnswerButtonClicked"/>
+                        Clicked="OnAnswerButtonClicked"
+                        BackgroundColor="LightSkyBlue"/>
 
-                <Button Text="{Binding AnswerC}"
+                <Button x:Name="AnswerButtonC" Text="{Binding AnswerC}"
                         Grid.Row="1" Grid.Column="0"
-                        Clicked="OnAnswerButtonClicked"/>
+                        Clicked="OnAnswerButtonClicked"
+                        BackgroundColor="LightSkyBlue"/>
 
-                <Button Text="{Binding AnswerD}"
+                <Button x:Name="AnswerButtonD" Text="{Binding AnswerD}"
                         Grid.Row="1" Grid.Column="1"
-                        Clicked="OnAnswerButtonClicked"/>
+                        Clicked="OnAnswerButtonClicked"
+                        BackgroundColor="LightSkyBlue"/>
             </Grid>
         </VerticalStackLayout>
 

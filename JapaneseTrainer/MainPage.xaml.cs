@@ -10,8 +10,12 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
 	private Vocabulary? _currentVocabulary;
 	private List<Vocabulary> _vocabularies;
+    private string? _answerA;
+    private string? _answerB;
+    private string? _answerC;
+    private string? _answerD;
 
-	public Vocabulary? CurrentVocabulary
+    public Vocabulary? CurrentVocabulary
 	{
 		get => _currentVocabulary;
 		set
@@ -21,15 +25,46 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		}
 	}
 
-	public string AnswerA 
+	public string? AnswerA 
 	{ 
-		get; 
-		set; 
-	} = string.Empty;
+		get => _answerA;
+		set
+		{
+			_answerA = value;
+			OnPropertyChanged();
+		}
+	}
 
-	public string AnswerB { get; set; } = string.Empty;
-	public string AnswerC { get; set; } = string.Empty;
-	public string AnswerD { get; set; } = string.Empty;
+	public string? AnswerB 
+	{ 
+		get => _answerB;
+		set
+		{
+			_answerB = value;
+			OnPropertyChanged();
+		}
+	}
+
+	public string? AnswerC 
+	{ 
+		get => _answerC;
+		set
+		{
+			_answerC = value;
+			OnPropertyChanged();
+		}
+	}
+
+	public string? AnswerD 
+	{ 
+		get => _answerD;
+		set
+		{
+			_answerD = value;
+			OnPropertyChanged();
+		}
+	}
+
 
 	public MainPage()
 	{
@@ -90,11 +125,11 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		{
 			if (button.Text == CurrentVocabulary?.Translation)
 			{
-				button.BackgroundColor = Colors.Green;
+				button.BackgroundColor = Colors.LightGreen;
 			}
 			else
 			{
-				button.BackgroundColor = Colors.Red;
+				button.BackgroundColor = Colors.LightCoral;
 			}
 		}
 	}
@@ -105,7 +140,14 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		Button? button = sender as Button;
 		if (button != null)
 		{
-			button.BackgroundColor = Colors.Green;
+			CurrentVocabulary = _vocabularies[Random.Shared.Next(_vocabularies.Count)];
+			SetAnswers();
+			
+			// Reset background colors
+			AnswerButtonA.BackgroundColor = Colors.LightSkyBlue;
+			AnswerButtonB.BackgroundColor = Colors.LightSkyBlue;
+			AnswerButtonC.BackgroundColor = Colors.LightSkyBlue;
+			AnswerButtonD.BackgroundColor = Colors.LightSkyBlue;
 		}
 	}
 
