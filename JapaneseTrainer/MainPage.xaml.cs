@@ -1,14 +1,25 @@
 ﻿using JapaneseTrainer.Data;
 using JapaneseTrainer.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace JapaneseTrainer;
 
-public partial class MainPage : ContentPage
+public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
-
 	private Vocabulary _currentVocabulary;
 	private List<Vocabulary> _vocabularies;
+
+	public Vocabulary CurrentVocabulary
+	{
+		get => _currentVocabulary;
+		set
+		{
+			_currentVocabulary = value;
+			OnPropertyChanged();
+		}
+	}
 
 	public MainPage()
 	{
@@ -20,8 +31,9 @@ public partial class MainPage : ContentPage
 		else
 		{
 			_vocabularies = ReadVocabulariesFromDB(MauiProgram.DatabasePath);
-			_currentVocabulary = _vocabularies[Random.Shared.Next(_vocabularies.Count)];
+			CurrentVocabulary = _vocabularies[Random.Shared.Next(_vocabularies.Count)];
 		}
+		BindingContext = this;
 	}
 
 	private List<Vocabulary> ReadVocabulariesFromDB(string databasePath)
@@ -78,5 +90,10 @@ public partial class MainPage : ContentPage
 		}
 	}
 
+	public event PropertyChangedEventHandler? PropertyChanged;
+	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
 }
 
