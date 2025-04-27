@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JapaneseTrainer.MainPage">
+
+    <ScrollView>
+        
+        <Grid RowDefinitions="Auto,*,Auto,Auto" Padding="20">
+
+        <VerticalStackLayout Grid.Row="1" Spacing="20">
+            <Label Text="test"
+                   FontSize="32"
+                   HorizontalOptions="Center" />
+
+            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="10" RowSpacing="10">
+                <Button Text="a"
+                        Grid.Row="0" Grid.Column="0"/>
+
+                <Button Text="b"
+                        Grid.Row="0" Grid.Column="1"/>
+
+                <Button Text="c"
+                        Grid.Row="1" Grid.Column="0"/>
+
+                <Button Text="d"
+                        Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+        </VerticalStackLayout>
+
+
+        <Button Text="weiter"
+                Grid.Row="3"
+                Margin="0,20"/>
+    </Grid>
+    </ScrollView>
+
+</ContentPage>
