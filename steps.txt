@@ -4,3 +4,11 @@ dotnet build -t:Run -f net8.0-maccatalyst
 
 cd ..
 dotnet add JapaneseTrainer/JapaneseTrainer.csproj package Microsoft.EntityFrameworkCore.Sqlite
+
+rm /Users/christinewiegand/Library/Containers/com.companyname.japanesetrainer/Data/Documents/JapaneseTrainer/japanesetrainer.db
+christinewiegand@iMac ~ % 
+
+
+sqlite3 /Users/christinewiegand/Library/Containers/com.companyname.japanesetrainer/Data/Documents/JapaneseTrainer/japanesetrainer.db
+.tables
+select * from Vocabulary;

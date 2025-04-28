@@ -30,7 +30,21 @@ public static class DatabaseInitializer
             new Vocabulary { JapaneseWord = "食べ物", Translation = "Food" },
             new Vocabulary { JapaneseWord = "本", Translation = "Book" },
             new Vocabulary { JapaneseWord = "学校", Translation = "School" },
-            new Vocabulary { JapaneseWord = "先生", Translation = "Teacher" }
+            new Vocabulary { JapaneseWord = "先生", Translation = "Teacher" },
+            
+            // New vocabulary words
+            new Vocabulary { JapaneseWord = "朝", Translation = "Morning" },
+            new Vocabulary { JapaneseWord = "夜", Translation = "Night" },
+            new Vocabulary { JapaneseWord = "椅子", Translation = "Chair" },
+            new Vocabulary { JapaneseWord = "お茶", Translation = "Tea" },
+            new Vocabulary { JapaneseWord = "時計", Translation = "Clock" },
+            new Vocabulary { JapaneseWord = "海", Translation = "Ocean" },
+            new Vocabulary { JapaneseWord = "山", Translation = "Mountain" },
+            new Vocabulary { JapaneseWord = "猫", Translation = "Cat" },
+            new Vocabulary { JapaneseWord = "犬", Translation = "Dog" },
+            new Vocabulary { JapaneseWord = "雑誌", Translation = "Magazine" },
+            new Vocabulary { JapaneseWord = "机", Translation = "Desk" },
+            new Vocabulary { JapaneseWord = "日本語", Translation = "Japanese (language)" }
         });
 
         // Add hiragana characters
