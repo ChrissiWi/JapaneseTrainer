@@ -10,12 +10,13 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
 	private Vocabulary? _currentVocabulary;
 	private List<Vocabulary> _vocabularies;
-    private string? _answerA;
-    private string? _answerB;
-    private string? _answerC;
-    private string? _answerD;
+	private JapaneseTrainerContext _context;
+	private string? _answerA;
+	private string? _answerB;
+	private string? _answerC;
+	private string? _answerD;
 
-    public Vocabulary? CurrentVocabulary
+	public Vocabulary? CurrentVocabulary
 	{
 		get => _currentVocabulary;
 		set
@@ -65,7 +66,6 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		}
 	}
 
-
 	public MainPage()
 	{
 		InitializeComponent();
@@ -75,79 +75,104 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		}
 		else
 		{
-			_vocabularies = ReadVocabulariesFromDB(MauiProgram.DatabasePath);
-			CurrentVocabulary = _vocabularies[Random.Shared.Next(_vocabularies.Count)];
-			SetAnswers();
+			var options = new DbContextOptionsBuilder<JapaneseTrainerContext>()
+				.UseSqlite($"Data Source={MauiProgram.DatabasePath}")
+				.Options;
+			_context = new JapaneseTrainerContext(options);
+			_vocabularies = _context.Vocabularies.ToList();
+			SelectNewWord();
 		}
 		BindingContext = this;
 	}
 
-	private void SetAnswers()
+	private void SelectNewWord()
 	{
-		AnswerA = _vocabularies[Random.Shared.Next(_vocabularies.Count)].Translation;
-		AnswerB = _vocabularies[Random.Shared.Next(_vocabularies.Count)].Translation;
-		AnswerC = _vocabularies[Random.Shared.Next(_vocabularies.Count)].Translation;
-		AnswerD = _vocabularies[Random.Shared.Next(_vocabularies.Count)].Translation;
-		
-		if (CurrentVocabulary != null)
+		if (!_vocabularies.Any()) return;
+
+		// Calculate total weight based on success ratios
+		var totalWeight = _vocabularies.Sum(v => 1 - v.SuccessRatio);
+		var random = new Random();
+		var randomValue = random.NextDouble() * totalWeight;
+
+		// Select word based on weights
+		double currentWeight = 0;
+		foreach (var word in _vocabularies)
 		{
-			switch (Random.Shared.Next(4))
+			currentWeight += 1 - word.SuccessRatio;
+			if (randomValue <= currentWeight)
 			{
-				case 0:
-					AnswerA = CurrentVocabulary.Translation;
-					break;
-				case 1:
-					AnswerB = CurrentVocabulary.Translation;
-					break;
-				case 2:
-					AnswerC = CurrentVocabulary.Translation;
-					break;
-				case 3:
-					AnswerD = CurrentVocabulary.Translation;
-						break;
+				CurrentVocabulary = word;
+				SetAnswers();
+				break;
 			}
 		}
 	}
 
-	private List<Vocabulary> ReadVocabulariesFromDB(string databasePath)
+	private void SetAnswers()
 	{
-		var options = new DbContextOptionsBuilder<JapaneseTrainerContext>()
-			.UseSqlite($"Data Source={databasePath}")
-			.Options;
-		using var context = new JapaneseTrainerContext(options);
-		return context.Vocabularies.ToList();
+		if (CurrentVocabulary == null) return;
+
+		// Get 3 random translations from other words
+		var otherTranslations = _vocabularies
+			.Where(v => v.Id != CurrentVocabulary.Id)
+			.OrderBy(x => Random.Shared.Next())
+			.Take(3)
+			.Select(v => v.Translation)
+			.ToList();
+
+		// Add the correct answer
+		var allAnswers = new List<string> { CurrentVocabulary.Translation };
+		allAnswers.AddRange(otherTranslations);
+
+		// Shuffle the answers
+		allAnswers = allAnswers.OrderBy(x => Random.Shared.Next()).ToList();
+
+		// Assign to buttons
+		AnswerA = allAnswers[0];
+		AnswerB = allAnswers[1];
+		AnswerC = allAnswers[2];
+		AnswerD = allAnswers[3];
 	}
 
 	private void OnAnswerButtonClicked(object sender, EventArgs e)
 	{
+		if (CurrentVocabulary == null) return;
+
 		Button? button = sender as Button;
 		if (button != null)
 		{
-			if (button.Text == CurrentVocabulary?.Translation)
+			bool isCorrect = button.Text == CurrentVocabulary.Translation;
+			
+			// Update answer counts
+			if (isCorrect)
 			{
+				CurrentVocabulary.NumberRightAnswers++;
 				button.BackgroundColor = Colors.LightGreen;
 			}
 			else
 			{
+				CurrentVocabulary.NumberWrongAnswers++;
 				button.BackgroundColor = Colors.LightCoral;
 			}
+
+			// Save changes to database
+			_context.SaveChanges();
 		}
 	}
-
 
 	private void OnButtonNextClicked(object sender, EventArgs e)
 	{
 		Button? button = sender as Button;
 		if (button != null)
 		{
-			CurrentVocabulary = _vocabularies[Random.Shared.Next(_vocabularies.Count)];
-			SetAnswers();
-			
 			// Reset background colors
 			AnswerButtonA.BackgroundColor = Colors.LightSkyBlue;
 			AnswerButtonB.BackgroundColor = Colors.LightSkyBlue;
 			AnswerButtonC.BackgroundColor = Colors.LightSkyBlue;
 			AnswerButtonD.BackgroundColor = Colors.LightSkyBlue;
+
+			// Select new word
+			SelectNewWord();
 		}
 	}
 

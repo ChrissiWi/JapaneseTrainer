@@ -4,43 +4,44 @@
              x:Class="JapaneseTrainer.MainPage">
 
     <ScrollView>
-        
         <Grid RowDefinitions="Auto,*,Auto,Auto" Padding="20">
+            <VerticalStackLayout Grid.Row="1" Spacing="20">
+                <Label Text="{Binding CurrentVocabulary.JapaneseWord}"
+                       FontSize="32"
+                       HorizontalOptions="Center" />
 
-        <VerticalStackLayout Grid.Row="1" Spacing="20">
-            <Label Text="{Binding CurrentVocabulary.JapaneseWord}"
-                   FontSize="32"
-                   HorizontalOptions="Center" />
+                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="10" RowSpacing="10">
+                    <Button x:Name="AnswerButtonA"
+                            Text="{Binding AnswerA}"
+                            Grid.Row="0" Grid.Column="0"
+                            Clicked="OnAnswerButtonClicked"
+                            BackgroundColor="LightSkyBlue"/>
 
-            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="10" RowSpacing="10">
-                <Button x:Name="AnswerButtonA" Text="{Binding AnswerA}"
-                        Grid.Row="0" Grid.Column="0"
-                        Clicked="OnAnswerButtonClicked"
-                        BackgroundColor="LightSkyBlue"/>
+                    <Button x:Name="AnswerButtonB"
+                            Text="{Binding AnswerB}"
+                            Grid.Row="0" Grid.Column="1"
+                            Clicked="OnAnswerButtonClicked"
+                            BackgroundColor="LightSkyBlue"/>
 
-                <Button x:Name="AnswerButtonB" Text="{Binding AnswerB}"
-                        Grid.Row="0" Grid.Column="1"
-                        Clicked="OnAnswerButtonClicked"
-                        BackgroundColor="LightSkyBlue"/>
+                    <Button x:Name="AnswerButtonC"
+                            Text="{Binding AnswerC}"
+                            Grid.Row="1" Grid.Column="0"
+                            Clicked="OnAnswerButtonClicked"
+                            BackgroundColor="LightSkyBlue"/>
 
-                <Button x:Name="AnswerButtonC" Text="{Binding AnswerC}"
-                        Grid.Row="1" Grid.Column="0"
-                        Clicked="OnAnswerButtonClicked"
-                        BackgroundColor="LightSkyBlue"/>
+                    <Button x:Name="AnswerButtonD"
+                            Text="{Binding AnswerD}"
+                            Grid.Row="1" Grid.Column="1"
+                            Clicked="OnAnswerButtonClicked"
+                            BackgroundColor="LightSkyBlue"/>
+                </Grid>
+            </VerticalStackLayout>
 
-                <Button x:Name="AnswerButtonD" Text="{Binding AnswerD}"
-                        Grid.Row="1" Grid.Column="1"
-                        Clicked="OnAnswerButtonClicked"
-                        BackgroundColor="LightSkyBlue"/>
-            </Grid>
-        </VerticalStackLayout>
-
-
-        <Button Text="weiter"
-                Grid.Row="3"
-                Margin="0,20"
-                Clicked="OnButtonNextClicked"/>
-    </Grid>
+            <Button Text="weiter"
+                    Grid.Row="3"
+                    Margin="0,20"
+                    Clicked="OnButtonNextClicked"/>
+        </Grid>
     </ScrollView>
 
 </ContentPage>

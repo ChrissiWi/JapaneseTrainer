@@ -14,4 +14,10 @@ public class Vocabulary
     [MinLength(1, ErrorMessage = "Translation cannot be empty")]
     public string Translation { get; set; } = string.Empty;
 
+    public int NumberRightAnswers { get; set; } = 0;
+    public int NumberWrongAnswers { get; set; } = 0;
+
+    public double SuccessRatio => NumberRightAnswers + NumberWrongAnswers == 0 
+        ? 0.5 
+        : (double)NumberRightAnswers / (NumberRightAnswers + NumberWrongAnswers);
 } 
