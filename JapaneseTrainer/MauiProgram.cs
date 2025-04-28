@@ -41,8 +41,13 @@ public static class MauiProgram
 
 	private static void ConfigureServices(IServiceCollection services)
 	{
-		// Use the app's data directory
-		DatabasePath = Path.Combine(FileSystem.AppDataDirectory, "japanesetrainer.db");
+		// Create JapaneseTrainer directory in Documents if it doesn't exist
+		var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+		var japaneseTrainerPath = Path.Combine(documentsPath, "JapaneseTrainer");
+		Directory.CreateDirectory(japaneseTrainerPath);
+
+		// Set database path
+		DatabasePath = Path.Combine(japaneseTrainerPath, "japanesetrainer.db");
 		services.AddDbContext<JapaneseTrainerContext>(options =>
 			options.UseSqlite($"Data Source={DatabasePath}"));
 	}
