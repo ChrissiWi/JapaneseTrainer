@@ -12,3 +12,8 @@ christinewiegand@iMac ~ %
 sqlite3 /Users/christinewiegand/Library/Containers/com.companyname.japanesetrainer/Data/Documents/JapaneseTrainer/japanesetrainer.db
 .tables
 select * from Vocabulary;
+
+
+for deployment on android smartphone:
+check if your device is connected: adb devices
+dotnet build -t:Run -f net8.0-android -v detailed
