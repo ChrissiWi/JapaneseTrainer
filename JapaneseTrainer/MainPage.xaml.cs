@@ -3,6 +3,9 @@ using JapaneseTrainer.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+using Plugin.Maui.Audio;
 
 namespace JapaneseTrainer;
 
@@ -15,6 +18,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 	private string? _answerB;
 	private string? _answerC;
 	private string? _answerD;
+	private IAudioManager _audioManager;
 
 	public Vocabulary? CurrentVocabulary
 	{
@@ -83,6 +87,44 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 			SelectNewWord();
 		}
 		BindingContext = this;
+		_audioManager = AudioManager.Current;
+	}
+
+	private async Task PlayAudioAsync(string japaneseWord)
+	{
+		try
+		{
+			// Create the audio file path
+			var audioFileName = $"{japaneseWord}.mp3";
+			Console.WriteLine($"Attempting to play audio file: {audioFileName}");
+			
+			// Get the audio file from the app package
+			using var stream = await FileSystem.OpenAppPackageFileAsync($"Audio/{audioFileName}");
+			if (stream == null)
+			{
+				Console.WriteLine($"Audio file not found: {audioFileName}");
+				return;
+			}
+			Console.WriteLine($"Successfully opened audio file: {audioFileName}");
+
+			using var audioPlayer = _audioManager.CreatePlayer(stream);
+			Console.WriteLine("Created audio player");
+			
+			audioPlayer.Play();
+			Console.WriteLine("Started audio playback");
+			
+			// Wait for playback to complete
+			while (audioPlayer.IsPlaying)
+			{
+				await Task.Delay(100);
+			}
+			Console.WriteLine("Audio playback completed");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Error playing audio: {ex.Message}");
+			Console.WriteLine($"Stack trace: {ex.StackTrace}");
+		}
 	}
 
 	private void SelectNewWord()
@@ -134,7 +176,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 		AnswerD = allAnswers[3];
 	}
 
-	private void OnAnswerButtonClicked(object sender, EventArgs e)
+	private async void OnAnswerButtonClicked(object sender, EventArgs e)
 	{
 		if (CurrentVocabulary == null) return;
 
@@ -148,6 +190,8 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
 			{
 				CurrentVocabulary.NumberRightAnswers++;
 				button.BackgroundColor = Colors.LightGreen;
+				// Play the audio for the correct answer
+				await PlayAudioAsync(CurrentVocabulary.JapaneseWord);
 			}
 			else
 			{

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using JapaneseTrainer.Data;
+using Plugin.Maui.Audio;
 
 namespace JapaneseTrainer;
 
@@ -50,5 +51,8 @@ public static class MauiProgram
 		DatabasePath = Path.Combine(japaneseTrainerPath, "japanesetrainer.db");
 		services.AddDbContext<JapaneseTrainerContext>(options =>
 			options.UseSqlite($"Data Source={DatabasePath}"));
+
+		// Register audio service
+		services.AddSingleton(AudioManager.Current);
 	}
 }
